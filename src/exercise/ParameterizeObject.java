@@ -61,7 +61,6 @@ public class ParameterizeObject {
 		}
 	}
 
-	// Test method
 	private void test() {
 		Account account = new Account();
 		DateRange range = new DateRange(new Date(1050), new Date(1250));
