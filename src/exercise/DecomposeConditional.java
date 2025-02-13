@@ -17,26 +17,26 @@ public class DecomposeConditional {
 			  this.winterServiceCharge = service;
 		  }
 		  
+//		  public double getTicketPrice(Date date, int quantity) {
+//		    double charge;
+//		    if (date.before(SUMMER_START) || date.after(SUMMER_END)) {
+//		      charge = quantity * winterRate + winterServiceCharge;
+//		    }
+//		    else {
+//		      charge = quantity * summerRate;
+//		    }
+//		    return charge;
+//		  }
+		  
 		  public double getTicketPrice(Date date, int quantity) {
-		    double charge;
-		    if (date.before(SUMMER_START) || date.after(SUMMER_END)) {
-		      charge = quantity * winterRate + winterServiceCharge;
-		    }
-		    else {
-		      charge = quantity * summerRate;
-		    }
-		    return charge;
+			  if(!isSummer(date)) return quantity * winterRate + winterServiceCharge;
+			  return quantity * summerRate;
 		  }
 		  
-//		  public double getTicketPrice(Date date, int quantity) {
-//			  if(!isSummer(date)) return quantity * winterRate + winterServiceCharge;
-//			  else return quantity * summerRate;
-//		  }
-//		  
-//		  public boolean isSummer(Date date) {
-//			  if (date.before(SUMMER_START) || date.after(SUMMER_END)) return false;
-//			  else return true;
-//		  }
+		  public boolean isSummer(Date date) {
+			  if (date.before(SUMMER_START) || date.after(SUMMER_END)) return false;
+			  return true;
+		  }
 		  
 		  
 		}

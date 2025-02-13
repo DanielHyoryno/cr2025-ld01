@@ -1,62 +1,76 @@
 package exercise;
+
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Vector;
 
-
 public class ParameterizeObject {
-	// TODO: change the logic of Date start & Date end of this Account class by
-	//       introduce parameter object
-	class Account {
-		  // ...
-		  private Vector transactions = new Vector();
-		  public Account() {
-			  transactions.add(new Transaction(1000, new Date(1000)));
-			  transactions.add(new Transaction(1200, new Date(1100)));
-			  transactions.add(new Transaction(1500, new Date(1200)));
-			  transactions.add(new Transaction(1300, new Date(1300)));
-		  }
 
-		  public double getFlowBetween(Date start, Date end) {
-		    double result = 0;
-		    Enumeration e = transactions.elements();
-		    while (e.hasMoreElements()) {
-		      Transaction each = (Transaction) e.nextElement();
-		      if (each.getDate().compareTo(start) >= 0 && each.getDate().compareTo(end) <= 0) {
-		        result += each.getValue();
-		      }
-		    }
-		    return result;
-		  }
+	class DateRange{
+		private Date mulai;
+		private Date stop;
+
+		public DateRange(Date mulai, Date stop){
+			this.mulai = mulai;
+			this.stop = stop;
 		}
 
-		class Transaction {
-		  private Date chargeDate;
-		  private double value;
+		public boolean isWithinRange(Date date){
+			return(date.compareTo(mulai) >= 0) && (date.compareTo(stop) <= 0);
+		
+	}}
 
-		  public Transaction(double value, Date chargeDate) {
-		    this.value = value;
-		    this.chargeDate = chargeDate;
-		  }
-		  public Date getDate() {
-		    return chargeDate;
-		  }
-		  public double getValue() {
-		    return value;
-		  }
+	class Account{
+		private Vector<Transaction> transactions = new Vector<>();
+
+		public Account(){
+			transactions.add(new Transaction(1000, new Date(1000)));
+			transactions.add(new Transaction(1200, new Date(1100)));
+			transactions.add(new Transaction(1500, new Date(1200)));
+			transactions.add(new Transaction(1300, new Date(1300)));
 		}
 
+		public double getFlowBetween(DateRange dateRange){
+			double totalFlow = 0;
+			Enumeration<Transaction> elements = transactions.elements();
+			while(elements.hasMoreElements()){
+				Transaction currentTransaction = elements.nextElement();
+				if(dateRange.isWithinRange(currentTransaction.getDate())){
+					totalFlow += currentTransaction.getValue();
+				}
+			}
+			return totalFlow;
+		}
+	}
+	
+	class Transaction {
+		private Date chargeDate;
+		private double value;
+
+		public Transaction(double value, Date chargeDate) {
+			this.value = value;
+			this.chargeDate = chargeDate;
+		}
+
+		public Date getDate() {
+			return chargeDate;
+		}
+
+		public double getValue() {
+			return value;
+		}
+	}
+
+	// Test method
 	private void test() {
 		Account account = new Account();
-		Date startDate = new Date(1050);
-		Date endDate = new Date(1250);
-		double flow = account.getFlowBetween(startDate, endDate);
-		System.out.println(flow);
-		
-	}
-	public static void main(String[] args) {
-		ParameterizeObject p = new ParameterizeObject();
-		p.test();
+		DateRange range = new DateRange(new Date(1050), new Date(1250));
+		double flow = account.getFlowBetween(range);
+		System.out.println("Total Flow: " + flow);
 	}
 
+	public static void main(String[] args) {
+		ParameterizeObject program = new ParameterizeObject();
+		program.test();
+	}
 }
