@@ -9,7 +9,6 @@ public class PreserveObject {
 			this.highest = highest;
 		}
 
-		// TODO: replace low & high in this withinPlan with preserve whole object
 		public boolean withinPlan(HeatingPlan plan) {
 			int low = getLowestTemp();
 			int high = getHighestTemp();
